@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,29 +9,58 @@ namespace DataBisenessLogic.Services
 {
     public class RequestRep : IRequestRep
     {
-        public Task<Request> AddRequest(Request request)
+        private readonly ServiceRepairOfHouseholdContext _context = new ServiceRepairOfHouseholdContext();
+
+        public async Task<Request> AddRequest(Request request)
         {
-            throw new NotImplementedException();
+            _context.Requests.Add(request);
+            await _context.SaveChangesAsync();
+            return request;
         }
 
-        public Task DeleteRequest(int requestId)
+        public async Task DeleteRequest(int requestId)
         {
-            throw new NotImplementedException();
+            //using (TransactionScope scope = new TransactionScope())
+            //{
+            //    var order = _context.Orders.Include("OrderItems")
+            //        .Include("OrderItems.OrderItemsOptions")
+            //        .FirstOrDefault(o => o.Id == orderId);
+
+            //    if (order != null)
+            //    {
+            //        foreach (OrderItem item in order.OrderItems)
+            //        {
+            //            foreach (var itemOpt in item.OrderItemOptions)
+            //            {
+            //                _context.OrderItemOptions.Remove(itemOpt);
+            //            }
+            //            _context.OrderItems.Remove(item);
+            //        }
+            //        _context.Orders.Remove(order);
+            //    }
+
+            //    await _context.SaveChangesAsync();
+            //    scope.Complete();
+            //}
         }
 
-        public Task<List<Request>> GetRequest()
-        {
-            throw new NotImplementedException();
-        }
+        public Task<List<Request>> GetRequest() => _context.Requests.ToListAsync();
+
 
         public Task<Request> GetRequestId(int requestId)
         {
-            throw new NotImplementedException();
+            return _context.Requests.FirstOrDefaultAsync(b => b.RequestId == requestId);
         }
 
-        public Task<Request> UpdateRequest(Request request)
+        public async Task<Request> UpdateRequest(Request request)
         {
-            throw new NotImplementedException();
+            if (!_context.Requests.Local.Any(o => o.RequestId == request.RequestId))
+            {
+                _context.Requests.Attach(request);
+            }
+            _context.Entry(request).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return request;
         }
     }
 }

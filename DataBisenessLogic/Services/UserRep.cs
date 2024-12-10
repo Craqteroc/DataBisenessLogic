@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Azure.Core;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,29 +10,59 @@ namespace DataBisenessLogic.Services
 {
     public class UserRep : IUserRep
     {
-        public Task<User> AddUser(User user)
+        private readonly ServiceRepairOfHouseholdContext _context = new ServiceRepairOfHouseholdContext();
+        public async Task<User> AddUser(User user)
         {
-            throw new NotImplementedException();
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+            return user;
         }
 
-        public Task DeleteUser(int userId)
+        public async Task DeleteUser(int userId)
         {
-            throw new NotImplementedException();
+            //using (TransactionScope scope = new TransactionScope())
+            //{
+            //    var order = _context.Orders.Include("OrderItems")
+            //        .Include("OrderItems.OrderItemsOptions")
+            //        .FirstOrDefault(o => o.Id == orderId);
+
+            //    if (order != null)
+            //    {
+            //        foreach (OrderItem item in order.OrderItems)
+            //        {
+            //            foreach (var itemOpt in item.OrderItemOptions)
+            //            {
+            //                _context.OrderItemOptions.Remove(itemOpt);
+            //            }
+            //            _context.OrderItems.Remove(item);
+            //        }
+            //        _context.Orders.Remove(order);
+            //    }
+
+            //    await _context.SaveChangesAsync();
+            //    scope.Complete();
+            //}
         }
 
         public Task<List<User>> GetUser()
         {
-            throw new NotImplementedException();
+            return _context.Users.ToListAsync();
         }
 
         public Task<User> GetUserId(int userId)
         {
-            throw new NotImplementedException();
+            return _context.Users.FirstOrDefaultAsync(x => x.UserId == userId);
         }
 
-        public Task<User> UpdateUser(User user)
+        public async Task<User> UpdateUser(User user)
         {
-            throw new NotImplementedException();
+            if (!_context.Users.Local.Any(o => o.UserId == user.UserId))
+            {
+                _context.Users.Attach(user);
+            }
+            _context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return user;
         }
     }
 }

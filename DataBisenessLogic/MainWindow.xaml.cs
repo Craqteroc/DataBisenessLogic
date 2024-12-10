@@ -31,7 +31,12 @@ namespace DataBisenessLogic
             // получение данных в JSON
             string jsonClients = _jsonser.GetClientsJson();
 
-            tvb.Text= (jsonClients);
+            //tvb.Text= (jsonClients);
+        }
+
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

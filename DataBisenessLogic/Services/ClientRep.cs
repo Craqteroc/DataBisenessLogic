@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,19 +9,23 @@ namespace DataBisenessLogic.Services
 {
     public class ClientRep : IClientRep
     {
-        public Task<Client> AddClient(Client client)
+        private readonly ServiceRepairOfHouseholdContext _context = new ServiceRepairOfHouseholdContext();
+
+        public async Task<Client> AddClient(Client client)
         {
-            throw new NotImplementedException();
+            _context.Clients.Add(client);
+            await _context.SaveChangesAsync();
+            return client;
         }
 
         public Task<List<Client>> GetClient()
         {
-            throw new NotImplementedException();
+            return _context.Clients.ToListAsync();
         }
 
         public Task<Client> GetClientId(int clientId)
         {
-            throw new NotImplementedException();
+            return _context.Clients.FirstOrDefaultAsync(x => x.ClientId == clientId);
         }
     }
 }
