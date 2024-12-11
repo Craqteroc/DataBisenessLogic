@@ -34,7 +34,7 @@
             <Grid>
                 <Button VerticalAlignment="Top" HorizontalAlignment="Left" 
                         Style="{StaticResource BtStyleMain}" Foreground="White" Margin="80,20,0,0" 
-                        Width="110" FontSize="18" Command="{Binding OpenClientAdd}">Добавить</Button>
+                        Width="110" FontSize="18" Command="{Binding OpenRequestAdd}">Добавить</Button>
 
                 <Grid Grid.Row="1" Height="380" 
                       Width="750" >

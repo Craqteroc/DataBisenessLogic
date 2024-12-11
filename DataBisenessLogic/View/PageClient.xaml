@@ -17,10 +17,6 @@
         </i1:EventTrigger>
     </i1:Interaction.Triggers>
 
-    <!--<Page.DataContext>
-        <vm:MainViewModel/>
-    </Page.DataContext>-->
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="65"/>

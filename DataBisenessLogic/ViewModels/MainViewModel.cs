@@ -18,9 +18,8 @@ namespace DataBisenessLogic.ViewModels
         private Page user = new PageUser();
         private Page _Nachalnoe = new PageClient();
         private Page _client = new PageClient();
-        //private Page admincatalog = new KatalogAdmin();
-        //private Page zakazi = new Zakazi();
-        //private Page _nachalnoeAdmin = new KatalogAdmin();
+        private Page addrequest = new PageAddRequest();
+        private Page adduser = new PageAddUser();
 
 
         public Page Nachalnoe
@@ -63,13 +62,20 @@ namespace DataBisenessLogic.ViewModels
             }
         }
 
-        //public ICommand OpenPageKat
-        //{
-        //    get
-        //    {
-        //        return new RelayCommand(() => Nachalnoe = katalog);
-        //    }
-        //}
+        public ICommand OpenRequestAdd
+        {
+            get
+            {
+                return new RelayCommand(() => Nachalnoe = addrequest);
+            }
+        }
+        public ICommand OpenUserAdd
+        {
+            get
+            {
+                return new RelayCommand(() => Nachalnoe = adduser);
+            }
+        }
 
     }
 }

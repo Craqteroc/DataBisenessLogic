@@ -1,4 +1,5 @@
-﻿using DataBisenessLogic.ViewModels;
+﻿using DataBisenessLogic.Services;
+using DataBisenessLogic.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace DataBisenessLogic.Pages
         public PageClient()
         {
             InitializeComponent();
-            
+
         }
 
     }
